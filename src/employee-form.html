@@ -1,0 +1,89 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="employee-form">
+    <template>
+
+        <style include="shared-styles"></style>
+
+        <form>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" value="{{employee.email}}"  name="email" class="form-control" id="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="name">First Name</label>
+                <input type="text" value="{{employee.name}}" name="name"  class="form-control" id="name" placeholder="First name">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text"  value="{{employee.lastName}}" name="lastName" class="form-control" id="lastName" placeholder="Last name">
+            </div>
+            <button class="btn btn-default" on-click="save">Save</button>
+        </form>
+
+
+        <app-location route="{{route}}"></app-location>
+        <app-route route="{{route}}" pattern="/:page/:id" data="{{routeData}}"></app-route>
+
+
+
+        <iron-ajax auto url="src/employees.json" last-response={{employees}} on-response="select"></iron-ajax>
+
+    </template>
+    <script>
+
+        class EmployeeForm extends Polymer.Element {
+
+            static get is() {
+                return 'employee-form'
+            }
+
+            static get properties() {
+                return {
+                    employee: {
+                        type: Object,
+                        notify: true
+                    },
+                };
+            }
+
+            static get observers() {
+                return [
+                    '_routePageChanged(routeData.id)',
+                ];
+            }
+
+            _routePageChanged(newId) {
+                let id = newId;
+
+                let selectedEmp = this.employees.find( (item) => {
+                        return item.id == id;
+                    }
+                );
+                this.set('employee', selectedEmp);
+
+            }
+
+            select(evt) {
+                if(this.routeData.page !== 'edit')
+                    return;
+
+                let id = this.routeData.id;
+                let selectedEmp = evt.detail.response.find( (item) => {
+                        return item.id == id;
+                    }
+                );
+
+                this.set('employee', selectedEmp);
+            }
+
+
+        }
+        customElements.define(EmployeeForm.is, EmployeeForm);
+
+    </script>
+</dom-module>
