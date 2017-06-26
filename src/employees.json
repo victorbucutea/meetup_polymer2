@@ -1,8 +1,0 @@
-
-[
-  {"id": 1, "name": "Ionel", "lastName": "Popescu", "email": "ion.popescu@activ.ro"},
-  {"id": 2, "name": "Gigel", "lastName": "Ionescu", "email": "gigel.ionescu@activ.ro"},
-  {"id": 3, "name": "Alexandru", "lastName": "Popa", "email": "alexandru.popa@activ.ro"},
-  {"id": 4, "name": "Daniel", "lastName": "Simion", "email": "daniel.simion@activ.ro"},
-  {"id": 5, "name": "Margareta ", "lastName": "Popescu", "email": "margareta.popescu@activ.ro"}
-]
